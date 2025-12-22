@@ -1,0 +1,5 @@
+{
+  "name": "VoucherVault Architect Demo",
+  "description": "A comprehensive FinTech prototype demonstrating USSD-to-Virtual Card voucher redemption with AI-driven fraud detection and architectural documentation.",
+  "requestFramePermissions": []
+}
