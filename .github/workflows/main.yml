@@ -1,0 +1,45 @@
+name: vouchervault
+description: Secure remittance-to-digital bridge for the South African market.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- Security & Authentication ---
+  # Allows for Biometric (FaceID/Fingerprint) and PIN fallback
+  local_auth: ^2.3.0
+  
+  # Securely stores the PIN and Virtual Card tokens (encrypted)
+  flutter_secure_storage: ^9.2.2
+
+  # --- Identity & AI (FICA/KYC) ---
+  # For real-time Face Detection and Liveness checks
+  google_mlkit_face_detection: ^0.12.0
+  
+  # For scanning South African ID Books/Cards (OCR)
+  google_mlkit_text_recognition: ^0.13.0
+
+  # --- Camera & UI ---
+  camera: ^0.11.0+2
+  path_provider: ^2.1.3
+  cupertino_icons: ^1.0.8
+
+  # --- Networking ---
+  # For connecting to your mock-banking API or BaaS provider
+  http: ^1.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  # Add your logo assets here
+  assets:
+    - assets/logo.png
+    l
