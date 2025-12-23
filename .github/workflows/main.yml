@@ -1,45 +1,39 @@
-name: vouchervault
-description: Secure remittance-to-digital bridge for the South African market.
-version: 1.0.0+1
+name: VoucherVault Build APK
 
-environment:
-  sdk: '>=3.0.0 <4.0.0'
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-dependencies:
-  flutter:
-    sdk: flutter
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  # --- Security & Authentication ---
-  # Allows for Biometric (FaceID/Fingerprint) and PIN fallback
-  local_auth: ^2.3.0
-  
-  # Securely stores the PIN and Virtual Card tokens (encrypted)
-  flutter_secure_storage: ^9.2.2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  # --- Identity & AI (FICA/KYC) ---
-  # For real-time Face Detection and Liveness checks
-  google_mlkit_face_detection: ^0.12.0
-  
-  # For scanning South African ID Books/Cards (OCR)
-  google_mlkit_text_recognition: ^0.13.0
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-  # --- Camera & UI ---
-  camera: ^0.11.0+2
-  path_provider: ^2.1.3
-  cupertino_icons: ^1.0.8
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
 
-  # --- Networking ---
-  # For connecting to your mock-banking API or BaaS provider
-  http: ^1.2.1
+      - name: Install dependencies
+        run: flutter pub get
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^4.0.0
+      - name: Build APK
+        run: flutter build apk --release
 
-flutter:
-  uses-material-design: true
-  # Add your logo assets here
-  assets:
-    - assets/logo.png
-    l
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          
