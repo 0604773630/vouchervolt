@@ -16,7 +16,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 18
-        cache: 'npm'
 
     - name: Install dependencies
       run: npm install
@@ -24,11 +23,11 @@ jobs:
     - name: Build project
       run: npm run build
       env:
-        CI: false # Prevents warnings from being treated as errors
+        CI: false 
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
         name: voucher-vault-web-build
-        path: dist/ # Ensure this matches your project's build folder (e.g., 'dist' for Vite/Vue or 'build' for React)
+        path: dist/ 
         
