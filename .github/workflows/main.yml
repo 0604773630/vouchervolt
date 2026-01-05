@@ -1,42 +1,32 @@
-name: VoucherVault Production Build
+name: VoucherVault Web Build
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true # Speeds up future builds
+    - name: Install dependencies
+      run: npm install
 
-      - name: Install dependencies
-        run: flutter pub get
+    - name: Build project
+      run: npm run build
+      env:
+        CI: false # Prevents warnings from being treated as errors
 
-      - name: Build APK (Release Mode)
-        run: flutter build apk --release --no-tree-shake-icons
-
-      - name: Upload Artifact (The Magic Fix)
-        uses: actions/upload-artifact@v4
-        with:
-          name: VoucherVault-Alpha-APK
-          # This wildcard path finds the APK regardless of internal folder shifts
-          path: build/app/outputs/flutter-apk/*.apk
-          if-no-files-found: error # Tells you exactly if the file wasn't created
-          
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: voucher-vault-web-build
+        path: dist/ # Adjust this if your build output directory is different (e.g., 'build')
