@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10 # Prevents the workflow from running for hours if it gets stuck
+    timeout-minutes: 10 
 
     steps:
     - name: Checkout repository
@@ -24,11 +24,14 @@ jobs:
     - name: Build project
       run: npm run build
       env:
-        CI: true # Forces a clean build and prevents interactive prompts that cause hangs
+        CI: true 
+
+    - name: Debug Folder Structure
+      run: ls -R # This will show us exactly where your files are hidden!
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
         name: voucher-vault-web-build
-        path: dist/ # Confirmed as the correct folder based on your previous logs
+        path: . # This uploads EVERYTHING so we can't miss it
         
