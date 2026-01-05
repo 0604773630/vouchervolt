@@ -1,8 +1,19 @@
+name: VoucherVault Web Build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4 # Updated from v3
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Set up Node.js
-      uses: actions/setup-node@v4 # Updated from v3
+      uses: actions/setup-node@v4
       with:
         node-version: 18
         cache: 'npm'
@@ -13,11 +24,11 @@
     - name: Build project
       run: npm run build
       env:
-        CI: false
+        CI: false # Prevents warnings from being treated as errors
 
     - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4 # Updated from v3
+      uses: actions/upload-artifact@v4
       with:
         name: voucher-vault-web-build
-        path: dist/
+        path: dist/ # Ensure this matches your project's build folder (e.g., 'dist' for Vite/Vue or 'build' for React)
         
