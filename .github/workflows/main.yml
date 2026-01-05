@@ -29,5 +29,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: voucher-vault-web-build
-        path: dist/ 
+        # Change 'build/' to 'dist/' or 'out/' if your framework uses a different folder
+        path: build/ 
         
